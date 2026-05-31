@@ -1,0 +1,32 @@
+# cloudraid 示例配置
+# 把这个文件保存到 ./data/config.yaml （或 cloudraid -config 指定的路径）
+
+data_dir: "./data"
+
+alist:
+  binary_path: "../alist/alist"          # 编译好的 alist 可执行文件
+  work_dir:    "./data/alist"            # alist 自己的 data 目录
+  address:     "http://127.0.0.1:5244"
+  admin_user:  "admin"
+  admin_password: "please-change-me"     # 同时通过 ALIST_ADMIN_PASSWORD 注入到 alist
+  subdir: "cloudraid"                    # 在每个 mount 下创建的子目录，用来隔离我们的块文件
+  mounts:
+    - "/local1"
+    - "/local2"
+    - "/local3"
+    - "/local4"
+
+stripe:
+  block_size:    4194304                 # 4 MiB 一块
+  write_workers: 4                       # 默认 = mounts 数量
+  read_workers:  4
+
+cache:
+  dir:       "./data/cache"
+  max_bytes: 2147483648                  # 2 GiB L1 缓存上限
+  write_through: true                    # 写入时同步落 cache，未来读直接命中
+
+webdav:
+  listen:   ":5260"
+  username: "cloudraid"
+  password: "please-change-me"

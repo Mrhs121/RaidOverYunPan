@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+/cloudraid
+*.test
+*.out
+coverage.out
+
+# Runtime data
+/data/
+
+# Local configs and backups
+*.local
+*.local.*
+*.local-backup
+*.bak
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+/tmp/
+*.tmp
+
+# IDE
+.vscode/
+.idea/
