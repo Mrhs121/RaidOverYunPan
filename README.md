@@ -307,6 +307,93 @@ http://<cloudraid 所在机器的局域网 IP>:5260/
 
 使用 `webdav.username` 和 `webdav.password` 登录。
 
+### 挂载 WebDAV
+
+下面假设 cloudraid 服务地址是：
+
+```text
+http://192.168.1.10:5260/
+```
+
+请把 `192.168.1.10` 换成运行 cloudraid 的机器在局域网内的 IP。
+
+#### macOS
+
+Finder 原生支持 WebDAV：
+
+1. 打开 Finder。
+2. 菜单栏选择 `前往` → `连接服务器...`。
+3. 输入：
+
+   ```text
+   http://192.168.1.10:5260/
+   ```
+
+4. 点击连接。
+5. 输入 `webdav.username` 和 `webdav.password`。
+6. 挂载成功后，可以像访问普通磁盘一样浏览、上传、播放文件。
+
+也可以用命令行挂载：
+
+```bash
+mkdir -p ~/Mounts/cloudraid
+mount_webdav http://192.168.1.10:5260/ ~/Mounts/cloudraid
+```
+
+#### Windows
+
+Windows 可以通过“映射网络驱动器”挂载：
+
+1. 打开文件资源管理器。
+2. 右键 `此电脑` → `映射网络驱动器...`。
+3. 选择一个盘符。
+4. 文件夹填写：
+
+   ```text
+   http://192.168.1.10:5260/
+   ```
+
+5. 勾选 `使用其他凭据连接`。
+6. 输入 `webdav.username` 和 `webdav.password`。
+
+如果 Windows 拒绝连接 HTTP WebDAV，可能需要启用 WebClient 服务，或允许 Basic Auth over HTTP。更推荐在不可信网络中使用 HTTPS 反向代理后再挂载。
+
+#### Linux
+
+Linux 常用 `davfs2` 挂载 WebDAV。
+
+Debian / Ubuntu：
+
+```bash
+sudo apt install davfs2
+mkdir -p ~/cloudraid
+sudo mount -t davfs http://192.168.1.10:5260/ ~/cloudraid
+```
+
+Fedora：
+
+```bash
+sudo dnf install davfs2
+mkdir -p ~/cloudraid
+sudo mount -t davfs http://192.168.1.10:5260/ ~/cloudraid
+```
+
+Arch Linux：
+
+```bash
+sudo pacman -S davfs2
+mkdir -p ~/cloudraid
+sudo mount -t davfs http://192.168.1.10:5260/ ~/cloudraid
+```
+
+挂载时输入 `webdav.username` 和 `webdav.password` 即可。
+
+如果只是临时访问，也可以用支持 WebDAV 的文件管理器，例如 GNOME Files、Dolphin、Thunar，地址通常写成：
+
+```text
+dav://192.168.1.10:5260/
+```
+
 ### 上传文件
 
 ```bash
